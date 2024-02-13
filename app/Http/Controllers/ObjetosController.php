@@ -42,6 +42,7 @@ class ObjetosController extends Controller
             'message' => 'Objeto ingresado correctamente',
             'objeto' => $objeto
         ],200);*/
+
         $objeto = new Objeto();
         $objeto->parent_id = $request->parent_id;
         $objeto->name = $request->name;
@@ -94,6 +95,8 @@ class ObjetosController extends Controller
         $objeto = Objeto::find($id);
         if ($objeto != null) {
             $objeto->delete();
+        }else{
+            return response()->json(['message'=> 'El registro con el id proporcionado no existe'],404);
         }
         return /*view('objects.index')*/ response()->json([
             'message' => 'Objeto borrado correctamente',
