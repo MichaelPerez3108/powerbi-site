@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('blobs', function (Blueprint $table) {
-            $table->id()->autoIncrement;
+            $table->uuid('id')->unique;
             $table->binary('content');
             $table->timestamps();
         });

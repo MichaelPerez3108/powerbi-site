@@ -12,13 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('objects', function (Blueprint $table) {
-            $table->id()->autoIncrement;
-            $table->integer('parent_id')->nullable();
-            $table->string('name',100);
+            $table->uuid('id')->unique;
+            $table->uuid('parent_id')->nullable()->index();
+            $table->string('name',100)->index();
             $table->string('type',100);
-            $table->foreignId('blob_id')
-            ->references('id')
-            ->on('blobs')->cascadeOnDelete;
+            $table->uuid('blob_id')->nullable();
             $table->timestamps();
         });
     }

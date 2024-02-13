@@ -3,12 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use App\Enums\ObjetoType;
 
-class User extends Authenticatable
+class Objeto extends Model
 {
 
     /**
@@ -17,11 +15,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'microsoft_user_id',
+        'id',
+        'parent_id',
         'name',
-        'email',
-        'password',
-        'scopes',
+        'type',
+        'blob_id',
     ];
 
     /**
@@ -30,8 +28,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        
     ];
 
     /**
@@ -40,7 +37,6 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'type'=> ObjetoType::class
     ];
 }
