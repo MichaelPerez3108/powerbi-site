@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GuardarObjetoRequest;
 use App\Models\Objeto;
-use App\Models\Objetos;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class ObjetosController extends Controller
 {
@@ -14,8 +17,12 @@ class ObjetosController extends Controller
     public function index()
     {
         $objetos = Objeto::all();
-        
+        /*
         return view('objects.index', compact('objetos'));
+
+        */
+
+        return $objetos->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -29,40 +36,69 @@ class ObjetosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GuardarObjetoRequest $request)
     {
-        //
+        /*
+        $objeto = Objeto::create($request->all());
+        return response()->json([
+            'status' => true,
+            'message' => 'Objeto ingresado correctamente',
+            'objeto' => $objeto
+        ],200);*/
+        $objeto = new Objeto();
+        $objeto->parent_id = $request->parent_id;
+        $objeto->name = $request->name;
+        $objeto->type = $request->type;
+        $objeto->blob_id = $request->blob_id;
+        $objeto->save();
+
+        return response()->json([
+            'message' => 'Objeto ingresado correctamente',
+            'Objeto' => $objeto,
+        ]);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Blob $blob)
+    public function show(string $id) 
     {
-        //
+        $objeto = Objeto::find($id);
+        return $objeto;
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Blob $blob)
+    public function edit(Objeto $objeto)
     {
-        return view('object.edit');
+        return view('objects.edit', compact('objeto'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Blob $blob)
+    public function update(Request $request, $id)
     {
-        //
+        $objeto = DB::table('objetos')->where('id',$id)->update($request->all());
+        $objeto_actualizado = DB::table('objetos')->find($id);
+        return response()->json([
+        'message' => 'Objeto actualizado correctamente',
+        'datos actualizados'=> $objeto_actualizado
+        ],200);
+        /*redirect()->route('objects.show')*/;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blob $blob)
+    public function destroy($id)
     {
-        //
+        $objeto = Objeto::find($id);
+        if($objeto != null){
+            $objeto->delete();
+        }
+        return view('objects.index');
     }
 }
