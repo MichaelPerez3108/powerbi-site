@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GuardarObjetoRequest;
 use App\Models\Objeto;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\Object_;
 
 class ObjetosController extends Controller
 {
@@ -36,7 +33,7 @@ class ObjetosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(GuardarObjetoRequest $request)
+    public function store(Request $request)
     {
         /*
         $objeto = Objeto::create($request->all());
@@ -56,13 +53,12 @@ class ObjetosController extends Controller
             'message' => 'Objeto ingresado correctamente',
             'Objeto' => $objeto,
         ]);
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id) 
+    public function show(string $id)
     {
         $objeto = Objeto::find($id);
         return $objeto;
@@ -81,13 +77,13 @@ class ObjetosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $objeto = DB::table('objetos')->where('id',$id)->update($request->all());
+        $objeto = DB::table('objetos')->where('id', $id)->update($request->all());
         $objeto_actualizado = DB::table('objetos')->find($id);
         return response()->json([
-        'message' => 'Objeto actualizado correctamente',
-        'datos actualizados'=> $objeto_actualizado
-        ],200);
-        /*redirect()->route('objects.show')*/;
+            'message' => 'Objeto actualizado correctamente',
+            'datos actualizados' => $objeto_actualizado
+        ], 200);
+            /*redirect()->route('objects.show')*/;
     }
 
     /**
@@ -96,9 +92,12 @@ class ObjetosController extends Controller
     public function destroy($id)
     {
         $objeto = Objeto::find($id);
-        if($objeto != null){
+        if ($objeto != null) {
             $objeto->delete();
         }
-        return view('objects.index');
+        return /*view('objects.index')*/ response()->json([
+            'message' => 'Objeto borrado correctamente',
+            'objeto eliminado' => $objeto
+        ]);
     }
 }
