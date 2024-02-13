@@ -29,6 +29,7 @@ Route::get('/blob', [BlobController::class, 'index'])->name('blob.index');
 Route::get('/blob/create', [BlobController::class, 'create'])->name('blob.create');
 Route::get('/blob/edit', [BlobController::class, 'edit'])->name('blob.edit');
 
+// corregir este metodo para que solo este la ruta y el crear lo haga el controlador
 Route::post('/blob/create', function () {
     Blob::create([
         'content' => request('blob')
@@ -40,6 +41,7 @@ Route::get('objects', [ObjetosController::class, 'index'])->name('objects.index'
 Route::get('objects/create', [ObjetosController::class, 'create'])->name('objects.create');
 Route::get('objects/edit', [ObjetosController::class, 'edit'])->name('objects.edit');
 
+/* metodo de creacion retornando la vista index de los objetos
 Route::post('/blob/create', function () {
     Objeto::create([
         'parent_id' => request('parent_id'),
@@ -49,6 +51,7 @@ Route::post('/blob/create', function () {
     ]);
     return view('objects.index');
 });
+*/
 
 Route::get('objects/{id}', [ObjetosController::class, 'show']);
 
