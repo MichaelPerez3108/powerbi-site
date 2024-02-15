@@ -4,10 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Blob;
 use App\Enums\ObjetoType;
 
 class Objeto extends Model
 {
+
 
     /**
      * The attributes that are mass assignable.
@@ -27,10 +30,7 @@ class Objeto extends Model
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        
-        
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast.
@@ -38,6 +38,10 @@ class Objeto extends Model
      * @var array<string, string>
      */
     protected $casts = [
-       /* 'type'=> ObjetoType::class*/
-    ];
+        /* 'type'=> ObjetoType::class*/];
+
+    public function blob()
+    {
+        return $this->hasOne(Blob::class, 'id', 'blob_id');
+    }
 }

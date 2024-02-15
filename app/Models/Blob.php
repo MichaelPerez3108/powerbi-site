@@ -9,27 +9,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blob extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
     protected $fillable = [
         'id',
         'content',
     ];
 
+    protected $hidden = [
 
-    protected function content(): Attribute
-    {
-        $attr = new Attribute(
-            get: fn ($value) => $value,
-            set: fn ($value) => $value
-        );
-        return Attribute::make(
-            get: function ($value) {
-                //...
-                return strtoupper($value);
-            },
-            set: function ($value) {
-                return strtolower($value);
-            }
-        );
-    }
+    ];
+
+    protected $cast = [
+
+    ];
+
 }

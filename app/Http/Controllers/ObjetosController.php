@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blob;
 use App\Models\Objeto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -35,26 +36,48 @@ class ObjetosController extends Controller
      */
     public function store(Request $request)
     {
-        /*
-        $objeto = Objeto::create($request->all());
-        return response()->json([
-            'status' => true,
-            'message' => 'Objeto ingresado correctamente',
-            'objeto' => $objeto
-        ],200);*/
+        // verificamos si en la respuesta contiene blob
+        if ($request->has('blob')) {
+            // aca creamos un blob para guardar
+            $blob = new Blob();
+            $blob->fill($request->blob);
+            $blob->save();
+            // Crea un nuevo objeto y asigna el ID del blob
+            $objeto = new Objeto();
+            $objeto->fill($request->except('blob'));
+            $objeto->blob_id = $blob->id; 
+            $objeto->save();
 
+            return response()->json([
+                'message' => 'Objeto y Blob ingresados correctamente',
+                'Objeto' => $objeto,
+                'Blob' => $blob,
+            ]);
+        } else {
+            // si no proporcionamos datos para guardar un blob entonces solo creamos el objeto
+            $objeto = new Objeto();
+            $objeto->fill($request->all());
+            $objeto->save();
+            return response()->json([
+                'message' => 'Objeto ingresado correctamente',
+                'Objeto' => $objeto,
+            ]);
+        }
+        /*   
         $objeto = new Objeto();
         $objeto->parent_id = $request->parent_id;
         $objeto->name = $request->name;
         $objeto->type = $request->type;
-        $objeto->blob_id = $request->blob_id;
-        $objeto->save();
 
+        $objeto->save();
         return response()->json([
             'message' => 'Objeto ingresado correctamente',
             'Objeto' => $objeto,
         ]);
+
+        */
     }
+
 
     /**
      * Display the specified resource.
@@ -78,12 +101,21 @@ class ObjetosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $objeto = DB::table('objetos')->where('id', $id)->update($request->all());
-        $objeto_actualizado = DB::table('objetos')->find($id);
-        return response()->json([
-            'message' => 'Objeto actualizado correctamente',
-            'datos actualizados' => $objeto_actualizado
-        ], 200);
+        $objeto = Objeto::find($id);
+        if ($objeto != null) {
+            $objeto->update($request->all());
+            return response()->json([
+                'message' => 'Objeto actualizado correctamente',
+                'datos actualizados' => $objeto
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Objeto con id no encontrado o no existe'
+            ]);
+        }
+
+
+
             /*redirect()->route('objects.show')*/;
     }
 
@@ -95,8 +127,8 @@ class ObjetosController extends Controller
         $objeto = Objeto::find($id);
         if ($objeto != null) {
             $objeto->delete();
-        }else{
-            return response()->json(['message'=> 'El registro con el id proporcionado no existe'],404);
+        } else {
+            return response()->json(['message' => 'El registro con el id proporcionado no existe'], 404);
         }
         return /*view('objects.index')*/ response()->json([
             'message' => 'Objeto borrado correctamente',

@@ -561,6 +561,7 @@ class ComposerStaticInit3f933c3a5793c1326f7ceda75d90e456
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
+        'App\\Http\\Requests\\GuardarObjetoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/GuardarObjetoRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Models\\Blob' => __DIR__ . '/../..' . '/app/Models/Blob.php',
         'App\\Models\\Objeto' => __DIR__ . '/../..' . '/app/Models/Objeto.php',
