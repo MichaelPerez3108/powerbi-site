@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Blob;
 use App\Models\Objeto;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ObjetosController extends Controller
