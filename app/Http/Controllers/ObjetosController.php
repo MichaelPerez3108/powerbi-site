@@ -19,7 +19,7 @@ class ObjetosController extends Controller
 
         */
 
-        return $objetos->toJson(JSON_PRETTY_PRINT);
+        return response()->json($objetos);
     }
 
     /**
@@ -44,7 +44,7 @@ class ObjetosController extends Controller
             // Crea un nuevo objeto y asigna el ID del blob
             $objeto = new Objeto();
             $objeto->fill($request->except('blob'));
-            $objeto->blob_id = $blob->id; 
+            $objeto->blob_id = $blob->id;
             $objeto->save();
 
             return response()->json([
@@ -81,10 +81,13 @@ class ObjetosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, Objeto $objeto, string $type = null)
     {
-        $objeto = Objeto::find($id);
-        return $objeto;
+        if ($request->expectsJson()) {
+            return response()->json($objeto);
+        }
+
+        return view('test')->with('objeto', $objeto)->with('type', $type);
     }
 
     /**

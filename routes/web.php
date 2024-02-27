@@ -15,9 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/main', function (){
+    return view ('main');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
-})/*->middleware(['auth', 'verified'])->name('dashboard')*/;
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,6 +44,9 @@ Route::post('/blob/create', function () {
 Route::get('objects', [ObjetosController::class, 'index'])->name('objects.index');
 Route::get('objects/create', [ObjetosController::class, 'create'])->name('objects.create');
 Route::get('objects/edit', [ObjetosController::class, 'edit'])->name('objects.edit');
+Route::get('objects/listado', function () {
+    return view('objects.listado');
+});
 
 /* metodo de creacion retornando la vista index de los objetos
 Route::post('/blob/create', function () {
@@ -55,12 +62,33 @@ Route::post('/blob/create', function () {
 
 Route::get('objects/{id}', [ObjetosController::class, 'show']);
 
-Route::post('objects/create', [ObjetosController::class,'store']);
+Route::post('objects/create', [ObjetosController::class, 'store']);
 
 Route::delete('objects/{id}', [ObjetosController::class, 'destroy']);
 
 // Ruta para recibir los datos a actualizar objeto
 
 Route::put('objects/{id}', [ObjetosController::class, 'update']);
+
+
+Route::controller(ObjetosController::class)->prefix('objetos')->name('objetos.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    //Route::get('/create', 'create')->name('create');
+    Route::post('/create', 'store')->name('store');
+    Route::get('/{objeto}/{type?}', 'show')->name('show');
+    //Route::get('/{objeto}/edit', 'edit')->name('edit');
+    Route::post('/{objeto}/edit', 'update')->name('update');
+    Route::post('/{objeto}/delete', 'delete')->name('delete');
+    /*
+    // rest
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{objeto}', 'show')->name('show');
+    Route::get('/{objeto}/edit', 'edit')->name('edit');
+    Route::put('/{objeto}', 'update')->name('update');
+    Route::delete('/{objeto}', 'delete')->name('delete');
+    */
+});
 
 require __DIR__ . '/auth.php';

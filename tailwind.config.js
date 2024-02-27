@@ -15,7 +15,12 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
+        colors:{
+            'redcs': '#ED1C24',
+            'amarillocs':'#fff69b',
+        },
     },
 
     plugins: [forms],
+    
 };
