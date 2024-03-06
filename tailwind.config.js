@@ -34,6 +34,7 @@ export default {
             'rojoactivo':'#C6191F',
             'negroclarito':'#4D4D4D',
             'negro':'#000000',
+            'azulLink':'#0038FF',
         },
     },
 

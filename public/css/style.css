@@ -2,3 +2,30 @@
     display: none !important;    
 }
 
+/* Estilos para las tarjetas */
+.card {
+    width: 48%; /* Ancho de cada tarjeta */
+    height: 52%;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los botones */
+.prev-btn,
+.next-btn {
+    z-index: 1;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+/* Estilos específicos para el botón "Anterior" */
+.prev-btn {
+    left: 0;
+}
+
+/* Estilos específicos para el botón "Siguiente" */
+.next-btn {
+    right: 0;
+}
+
+

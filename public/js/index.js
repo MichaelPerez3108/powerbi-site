@@ -1,20 +1,39 @@
-
-
 document.addEventListener('DOMContentLoaded', function() {
-
-    let boton = document.getElementById('boton');
-    let desplegar = document.getElementById('desplegar');
-    let cerrar = document.getElementById('cerrar');
-
-    boton.addEventListener("click", function() {
-        desplegar.classList.toggle("cierre");
-        cerrar.classList.toggle("cierre");
-    });
 
     document.addEventListener('click', function (event) {
         const navBar = document.querySelector('[x-data]');
         if (!navBar.contains(event.target)) {
             navBar.__x.$data.openComents = false;
+        }
+    });
+
+    const prevBtn = document.querySelector(".prev-btn");
+    const nextBtn = document.querySelector(".next-btn");
+    const container = document.querySelector(".bg-blanco");
+
+    let scrollAmount = 0;
+    const cardWidth = container.firstElementChild.offsetWidth;
+    const scrollWidth = container.scrollWidth;
+
+    prevBtn.addEventListener("click", function() {
+        if (scrollAmount > 0) {
+            scrollAmount -= cardWidth;
+            container.scrollTo({
+                top: 0,
+                left: scrollAmount,
+                behavior: "smooth"
+            });
+        }
+    });
+
+    nextBtn.addEventListener("click", function() {
+        if (scrollAmount < (scrollWidth - container.offsetWidth)) {
+            scrollAmount += cardWidth;
+            container.scrollTo({
+                top: 0,
+                left: scrollAmount,
+                behavior: "smooth"
+            });
         }
     });
 });
@@ -48,3 +67,20 @@ function fadeIn(el, display) {
         }
     })();
 }
+
+let defaultTransform = 0;
+function goNext() {
+    defaultTransform = defaultTransform - 398;
+    var slider = document.getElementById("slider");
+    if (Math.abs(defaultTransform) >= slider.scrollWidth / 1.7) defaultTransform = 0;
+    slider.style.transform = "translateX(" + defaultTransform + "px)";
+}
+next.addEventListener("click", goNext);
+function goPrev() {
+    var slider = document.getElementById("slider");
+    if (Math.abs(defaultTransform) === 0) defaultTransform = 0;
+    else defaultTransform = defaultTransform + 398;
+    slider.style.transform = "translateX(" + defaultTransform + "px)";
+}
+prev.addEventListener("click", goPrev);
+
