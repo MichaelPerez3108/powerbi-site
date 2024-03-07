@@ -15,8 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/main', function (){
-    return view ('main');
+
+Route::get('/display',function(){
+    return view('display');
 });
 
 Route::get('/dashboard', function () {
@@ -33,36 +34,17 @@ Route::get('/blob', [BlobController::class, 'index'])->name('blob.index');
 Route::get('/blob/create', [BlobController::class, 'create'])->name('blob.create');
 Route::get('/blob/edit', [BlobController::class, 'edit'])->name('blob.edit');
 
-// corregir este metodo para que solo este la ruta y el crear lo haga el controlador
-Route::post('/blob/create', function () {
-    Blob::create([
-        'content' => request('blob')
-    ]);
-    return view('blob.index');
-});
 
 Route::get('objects', [ObjetosController::class, 'index'])->name('objects.index');
-Route::get('objects/create', [ObjetosController::class, 'create'])->name('objects.create');
+Route::get('objects/create', [ObjetosController::class, 'create']);
 Route::get('objects/edit', [ObjetosController::class, 'edit'])->name('objects.edit');
 Route::get('objects/listado', function () {
     return view('objects.listado');
 });
 
-/* metodo de creacion retornando la vista index de los objetos
-Route::post('/blob/create', function () {
-    Objeto::create([
-        'parent_id' => request('parent_id'),
-        'name' => request('name'),
-        'type' => request('type'),
-        'blob_id' => request('blob_id')
-    ]);
-    return view('objects.index');
-});
-*/
+Route::get('objects/{objeto}', [ObjetosController::class, 'show'])->name('objects.show');
 
-Route::get('objects/{id}', [ObjetosController::class, 'show']);
-
-Route::post('objects/create', [ObjetosController::class, 'store']);
+Route::post('objects/store', [ObjetosController::class, 'store'])->name('objects.store');
 
 Route::delete('objects/{id}', [ObjetosController::class, 'destroy']);
 

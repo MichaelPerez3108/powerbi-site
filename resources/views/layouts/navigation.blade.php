@@ -1,37 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
+@props([
+    'objeto' => null
+    ])
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="https://kit.fontawesome.com/c580716ab2.js" crossorigin="anonymous" defer></script>
-    <script type="text/javascript" src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js" defer></script>
-    <link rel="stylesheet" href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" />
-    <script src="/js/index.js" defer></script>
-    @vite('resources/css/app.css')
-    <style>
-        /* Agregar estilo para ajustar el contenido principal cuando el menú está desplegado */
-        .main-content {
-            margin-left: 450px;
-            /* Ajusta este valor según tus necesidades */
-            transition: margin-left 0.2s ease;
-            /* Agrega una transición suave */
-        }
-
-        [x-show="open"]+.main-content {
-            margin-left: 150px;
-            /* Ajusta este valor según el ancho de tu menú desplegable */
-        }
-    </style>
-</head>
-
-<body class="bg-grisfondo" x-data="{ open: false, openDoc: false }" @click.away="open = false; openDoc = false">
-
+<header>
     <!-- BARRA DE NAVEGACION-->
-    <nav class="flex justify-between px-20 py-3 items-center bg-redcs">
+    <nav class="flex justify-between px-5 py-3 items-center bg-redcs z-50">
         <!-- boton de activar desplegable-->
         <button x-on:click="open = ! open" id="boton" class="w-3 ">
             <i class="fa-sharp fa-solid fa-bars fa-2xl" style="color: #fff69b;" id="desplegar"></i>
@@ -56,14 +29,16 @@
     </nav>
     <!-- Fin barra de navegacion-->
 
-
-
     <!-- Menu lateral de carpetas desplegable-->
+    
 
-    <div x-show="open" id="estado" style="position: absolute;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class="relative flex flex-col bg-clip-border  bg-redcs text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-        <img src="/img/cusezar.png" height="100" width="150" style="margin: 0 auto;">
+    <div x-show="open" id="estado" style="position: absolute;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class=" z-50 relative flex flex-col bg-clip-border  bg-redcs text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+        <img src="{{asset('/storage/assets/cusezar.png')}}" height="100" width="150" style="margin: 0 auto;">
         <hr class="bg-amarillocs mt-3" style="color: #fff69b; border:solid 1px;">
         <nav class="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
+
+        @if($objeto?->type == App\Enums\ObjetoType::Folder->value)
+            @foreach($objetos as $objeto)
             <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start text-blanco leading-tight transition-all hover:bg-rojoactivo hover:bg-opacity-80 focus:bg-rojoactivo focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
                 <div class="flex place-items-center mr-4">
                     <svg class="mr-1 h-3 w-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -76,13 +51,31 @@
                         <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" />
                     </svg>
                 </div>
-                Carpeta
+                {{$objeto->name}}
             </div>
+            @endforeach
+        @else
+        <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start text-blanco leading-tight transition-all hover:bg-rojoactivo hover:bg-opacity-80 focus:bg-rojoactivo focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+                <div class="flex place-items-center mr-4">
+                    <svg class="mr-1 h-3 w-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="16" />
+                        <line x1="8" y1="12" x2="16" y2="12" />
+                    </svg>
+                    <svg class="h-6 w-6 text-amarillocs" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" />
+                    </svg>
+                </div>
+                Reporte
+            </div>
+            @endif
+
         </nav>
     </div>
 
     <!-- DESPLEGABLE DEL MENU DE COMENTARIOS -->
-    <div x-show="openComents" style="position: absolute; right: 0;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class="relative flex flex-col bg-clip-border  bg-blanco text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+    <div x-show="openComents" style="position: absolute; right: 0;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class="z-50 relative flex flex-col bg-clip-border  bg-blanco text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
 
         <p>Calificaciones y comentarios</p>
         <hr class=" mt-3" style="color: #000000; border:solid 1px;">
@@ -170,42 +163,4 @@
     </div>
 
     <!--MENU DESPLEGABLE DE LA DOCUMENTACION-->
-
-    <div x-show="openDoc" style="position: absolute; right: 0;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class="z-50 relative flex flex-col bg-clip-border  bg-blanco text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-
-        <p>Documentación de: <strong>Objeto</strong></p>
-        <hr class="mt-3" style="color: #000000; border:solid 1px;">
-        <div class="flex flex-col gap-1 h-4/5 ">
-            <div class="">
-                <!-- Encabezado de documentación -->
-                <p class="inline text-sm">Autor: "</p><strong class="font-sm">Nombre del autor"</strong><br>
-                <p class="inline text-sm">Fecha de creación: "</p><strong class="font-sm">Fecha de creación del reporte"</strong><br>
-                <p class="inline text-sm"># Visitas: "</p><strong class="font-sm">1251"</strong>
-                <hr class="mt-3" style="color: #000000; border:solid 1px;">
-            </div>
-            <div class=" flex justify-between my-2">
-                <h6 class="text-negro font-medium">Contenido</h6>
-                <a href="" class="mx-3 underline underline-offset-4 text-azulLink">Editar</a>
-            </div>
-
-            <div class="flex text-center align-center justify-center overflow-auto">
-                <p class="text-center"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti alias ad obcaecati consequuntur sapiente, itaque eveniet vitae qui quam exercitationem velit, blanditiis provident! Saepe, laborum exercitationem totam aperiam cupiditate alias! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo officiis id asperiores rem esse. Ipsam, modi incidunt quae laborum quibusdam, fuga velit deserunt eos ut non ea, minus alias officia! Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis nostrum ut eligendi ipsa harum cupiditate praesentium aut corporis! Libero expedita voluptatum facilis aperiam natus iste officia nemo voluptates temporibus molestiae.
-                </p>
-            </div>
-        </div>
-        <!-- Contenido de la documentación -->
-
-        <div class="absolute bottom-4 left-4">
-            <button x-on:click="openDoc = !openDoc" class="align-center ">
-                <svg class="h-8 w-8 text-slate-900 inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                    <path d="M7 12h14l-3 -3m0 6l3 -3" />
-                </svg>
-                Cerrar
-            </button>
-        </div>
-    </div>
-</body>
-
-</html>
+</header>

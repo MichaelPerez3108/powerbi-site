@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blob;
 use App\Models\Objeto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ObjetosController extends Controller
 {
@@ -13,81 +14,65 @@ class ObjetosController extends Controller
      */
     public function index()
     {
-        $objetos = Objeto::all();
-        /*
-        return view('objects.index', compact('objetos'));
-
-        */
-
-        return response()->json($objetos);
+        $objetos = Objeto::orderBy('type')->get();
+        return view('objects.main',)->with('objetos', $objetos);
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('objects.create');
+        $carpetas = DB::table('objetos')->where('type', 'folder')->get();
+        return view('objects.create', compact('carpetas'));
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // verificamos si en la respuesta contiene blob
-        if ($request->has('blob')) {
-            // aca creamos un blob para guardar
+        // Verificamos si en la solicitud el campo content viene vacio
+        if ($request->content == null) {
+
+            $objeto = new Objeto();
+            $objeto->parent_id = $request->parent;
+            $objeto->name = $request->name;
+            $objeto->type = $request->type;
+            $objeto->save();
+        } else {
+
+
             $blob = new Blob();
-            $blob->fill($request->blob);
+            $blob->content = $request->content;
             $blob->save();
+
             // Crea un nuevo objeto y asigna el ID del blob
             $objeto = new Objeto();
-            $objeto->fill($request->except('blob'));
+            $objeto->parent_id = $request->parent;
+            $objeto->name = $request->name;
+            $objeto->type = $request->type;
             $objeto->blob_id = $blob->id;
             $objeto->save();
-
-            return response()->json([
-                'message' => 'Objeto y Blob ingresados correctamente',
-                'Objeto' => $objeto,
-                'Blob' => $blob,
-            ]);
-        } else {
-            // si no proporcionamos datos para guardar un blob entonces solo creamos el objeto
-            $objeto = new Objeto();
-            $objeto->fill($request->all());
-            $objeto->save();
-            return response()->json([
-                'message' => 'Objeto ingresado correctamente',
-                'Objeto' => $objeto,
-            ]);
         }
-        /*   
-        $objeto = new Objeto();
-        $objeto->parent_id = $request->parent_id;
-        $objeto->name = $request->name;
-        $objeto->type = $request->type;
 
-        $objeto->save();
-        return response()->json([
-            'message' => 'Objeto ingresado correctamente',
-            'Objeto' => $objeto,
-        ]);
-
-        */
+        return redirect()->route('objects.main');
     }
+
 
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, Objeto $objeto, string $type = null)
+    public function show(Request $request, Objeto $objeto)
     {
         if ($request->expectsJson()) {
             return response()->json($objeto);
         }
 
-        return view('test')->with('objeto', $objeto)->with('type', $type);
+        return view('display')->with('objeto', $objeto);
     }
 
     /**

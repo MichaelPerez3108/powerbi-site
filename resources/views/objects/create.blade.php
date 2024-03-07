@@ -1,59 +1,49 @@
-<!doctype html>
-<html lang="es">
+<x-app-layout>
+    <x-slot name='title'>
+        Crear Objeto
+    </x-slot>
+    
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crear objeto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-
-<body>
-
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{route('objects.index')}}">Listado de objetos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
-
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+    <div x-data="{ type: '', showName: true, showContent: false }" class="flex justify-center my-10">
+        <div class="container flex  flex-col text-center align-content-center rounded-xl bg-blanco" style="width: 500px; display:flex; align-items:center;justify-content:center;">
+            <div class="my-8">
+                <h1 class="font-bold text-center text-2xl">Formulario de objetos</h1>
+                <hr>
             </div>
+            <form method="POST" action="{{ route('objects.store') }}" class="w-96">
+                @csrf
+                <label class="block text-gray-700 text-sm font-bold my-2" for="parent">
+                    Carpeta donde se guardara
+                </label>
+                <select name="parent" id="parent" class="mt-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring focus:border-blue-500">
+                    <option value="" selected>Carpeta raiz</option>
+                    @foreach($carpetas as $carpeta)
+                    <option value="{{ $carpeta->id }}">{{ $carpeta->name }}</option>
+                    @endforeach
+                </select>
+                <label class="block text-gray-700 text-sm font-bold my-2" for="name">
+                    Nombre del objeto
+                </label>
+                <input type="text" name="name" class="mt-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring focus:border-blue-500" placeholder="Nombre del objeto" required x-model="name">
+
+                <label class="block text-gray-700 text-sm font-bold my-2" for="type">
+                    Tipo de objeto
+                </label>
+                <select name="type" id="type" class="mt-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring focus:border-blue-500" required x-model="type" @change="showContent = type !== 'folder'">
+                    <option value="" selected>Tipo de objeto</option>
+                    <option value="folder">Carpeta</option>
+                    <option value="report">Reporte</option>
+                </select>
+
+                <label class="block text-gray-700 text-sm font-bold my-2" for="url" x-show="type === 'report'">
+                    URL del frame PowerBI
+                </label>
+                <input type="text" name="content" x-show="type === 'report'" class="mt-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring focus:border-blue-500" placeholder="URL de Power-BI" x-model="url">
+
+                <button type="submit" class="bg-success text-white rounded-md py-2 px-3 m-4">Submit</button>
+            </form>
         </div>
-    </nav>
-
-
-    <h1>Form objetos</h1>
-    <div class="container flex text-center align-content-center " style="width: 500px; background-color:burlywood; display:flex; align-items:center;justify-content:center;">
-        <form method="POST">
-            @csrf
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label p-2">Crear objeto</label>
-                <input type="text" class="form-control" style="width: 300px;" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre del objeto" name="name">
-            </div>
-
-            <select class="form-select" aria-label="Default select example" name="type">
-                <option selected>Tipo de objeto</option>
-                <option value="folder">Carpeta</option>
-                <option value="report">Reporte</option>
-            </select>
-
-            <button type="submit" class="btn btn-primary m-2">Submit</button>
-        </form>
     </div>
+</x-app-layout>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
 
-</html>
