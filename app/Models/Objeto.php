@@ -38,7 +38,8 @@ class Objeto extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        /* 'type'=> ObjetoType::class*/];
+        'type' => ObjetoType::class
+    ];
 
     public function blob()
     {
