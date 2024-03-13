@@ -12,12 +12,20 @@ class ObjetosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $objetos = Objeto::orderBy('type')->get();
+        $objetos_builder = Objeto::orderBy('type');
+
+        if ($request->query->has('parent_id')) {
+            $objetos_builder->where('parent_id', $request->query->get('parent_id'));
+        }
+
+        $objetos = $objetos_builder->get();
+        if ($request->expectsJson()) {
+            return response()->json($objetos);
+        }
         return view('objects.main',)->with('objetos', $objetos);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -72,7 +80,10 @@ class ObjetosController extends Controller
             return response()->json($objeto);
         }
 
-        return view('display')->with('objeto', $objeto);
+        return view('display', [
+            'objetos' => [],
+            'objeto' => $objeto
+        ]);
     }
 
     /**

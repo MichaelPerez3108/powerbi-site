@@ -1,6 +1,6 @@
 @props([
-    'objeto' => null
-    ])
+'objeto' => null
+])
 
 <header>
     <!-- BARRA DE NAVEGACION-->
@@ -23,16 +23,32 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
                 </li>
-                <img src="" alt="Img perfil" class="bg-blanco relative inline-block h-[30px] w-[30px] !rounded-full object-cover object-center" />
+                <x-dropdown class="text-gray-500 bg-blanco">
+                    <x-slot name="trigger">
+                        <img src="" alt="Img perfil" class="bg-blanco relative inline-block h-[30px] w-[30px] !rounded-full object-cover object-center" />
+                    </x-slot>
+
+                    <x-slot name="content" class="bg-blanco">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-grisfondo dark:hover:bg-gray-600 dark:hover:text-white">Perfil</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-grisfondo dark:hover:bg-gray-600 dark:hover:text-white">Cerrar Sesion</a>
+                            </li>
+                        </ul>
+                    </x-slot>
+                </x-dropdown>
+
             </ul>
         </div>
     </nav>
     <!-- Fin barra de navegacion-->
 
     <!-- Menu lateral de carpetas desplegable-->
-    
 
-    <div x-show="open" id="estado" style="position: absolute;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class=" z-50 relative flex flex-col bg-clip-border  bg-redcs text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+
+    <!-- <div x-show="open" id="estado" style="position: absolute;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class=" z-50 relative flex flex-col bg-clip-border  bg-redcs text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
         <img src="{{asset('/storage/assets/cusezar.png')}}" height="100" width="150" style="margin: 0 auto;">
         <hr class="bg-amarillocs mt-3" style="color: #fff69b; border:solid 1px;">
         <nav class="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
@@ -73,6 +89,8 @@
 
         </nav>
     </div>
+-->
+
 
     <!-- DESPLEGABLE DEL MENU DE COMENTARIOS -->
     <div x-show="openComents" style="position: absolute; right: 0;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class="z-50 relative flex flex-col bg-clip-border  bg-blanco text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">

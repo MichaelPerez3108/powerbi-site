@@ -4,17 +4,14 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlobController;
 use App\Http\Controllers\ObjetosController;
-use App\Models\Blob;
-use App\Models\Objeto;
-use App\Models\Objetos;
-use App\Models\User;
 
 
 
-Route::get('/', function () {
+Route::get('/welcome', function(){
     return view('welcome');
 });
 
+Route::get('/objects/main', [ObjetosController::class, 'index'])->name('objects.main');
 
 Route::get('/display',function(){
     return view('display');
@@ -22,6 +19,7 @@ Route::get('/display',function(){
 
 Route::get('/dashboard', function () {
     return view('dashboard');
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
