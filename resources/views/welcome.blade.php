@@ -3,7 +3,6 @@
         Bienvenido | Principal
     </x-slot>
 
-
     <button x-on:click="openComents = !openComents" hidden>Comentarios</button>
     <button x-on:click="openDoc = !openDoc" hidden>Documentacion</button>
 
@@ -29,6 +28,7 @@
                         <img class="rounded-lg w-24 h-24" src="/img/report.png" alt="logo de reporte" />
                         <a href="#!"></a>
                     </div>
+                    
                     <div class="p-2">
                         <div class="">
                             <!-- titulo de la tarjeta -->
@@ -111,7 +111,6 @@
                     </div>
                 </div>
             </div>
-
 
         </div>
     </section>

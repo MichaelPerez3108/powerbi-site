@@ -22,13 +22,13 @@ const obtenerObjetos = async () => {
             const registro = document.createElement('div');
             registro.classList.add('flex', 'items-center', 'w-full', 'p-3', 'rounded-lg', 'text-start', 'text-blanco', 'leading-tight', 'transition-all', 'hover:bg-rojoactivo', 'hover:bg-opacity-80', 'focus:bg-rojoactivo', 'focus:bg-opacity-80', 'active:bg-gray-50', 'active:bg-opacity-80', 'hover:text-blue-900', 'focus:text-blue-900', 'active:text-blue-900', 'outline-none');
             registro.style.paddingLeft = `${nivel * 20}px`;
-
             // Agregar icono
             const iconoElemento = document.createElement('div');
-            iconoElemento.classList.add('flex', 'place-items-start', 'mr-4');
+            iconoElemento.classList.add('flex', 'place-items-start','ml-4', 'mr-2');
             const iconoSvg = document.createElement('i');
             iconoSvg.classList.add('fa-solid', icono, 'fa-lg');
             iconoSvg.style.color = '#fff69b';
+
             iconoElemento.appendChild(iconoSvg);
             registro.appendChild(iconoElemento);
 

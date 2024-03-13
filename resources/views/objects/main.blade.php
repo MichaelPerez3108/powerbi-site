@@ -29,7 +29,6 @@
 </head>
 
 <body class="bg-grisfondo" x-data="{ open: false, openDoc: false }" @click.away="open = false; openDoc = false">
-
     <!-- BARRA DE NAVEGACION-->
     <div x-data="{openComents:false}" @click.away="openComents = false" class="">
     @include('layouts.navigation')
@@ -38,7 +37,6 @@
         <!-- Fin barra de navegacion-->
 
         <!-- Menu lateral de carpetas desplegable-->
-
         <div x-show="open" id="estado" style="position: absolute;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class="relative flex flex-col bg-clip-border  bg-redcs text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
         <img src="{{asset('/storage/assets/cusezar.png')}}" height="100" width="150" style="margin: 0 auto;">
             <hr class="bg-amarillocs mt-3" style="color: #fff69b; border:solid 1px;">
@@ -128,10 +126,10 @@
             </nav>
 
 
-
+<!--
             <button x-on:click="openComents = ! openComents">Comentarios</button>
             <button x-on:click="openDoc = ! openDoc">Documentacion</button>
-
+    -->
 
             <div class="flex items-center justify-center ">
                 <div x-data="{ showModal: false, email: '' }">
