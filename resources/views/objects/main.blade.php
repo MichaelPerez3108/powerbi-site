@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vista principal</title>
+    <title>Vista principal | main</title>
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://kit.fontawesome.com/c580716ab2.js" crossorigin="anonymous" defer></script>
     @vite(['resources/css/app.css','resources/js/app.js'])
@@ -32,32 +32,7 @@
 
     <!-- BARRA DE NAVEGACION-->
     <div x-data="{openComents:false}" @click.away="openComents = false" class="">
-        <nav class="flex justify-between px-20 py-3 items-center bg-redcs">
-            <!-- boton de activar desplegable-->
-
-            <button x-on:click="open = ! open" id="boton" class="w-3 ">
-                <i class="fa-sharp fa-solid fa-bars fa-2xl" style="color: #fff69b;" id="desplegar"></i>
-            </button>
-
-            <!-- fin boton desplegable-->
-
-            <div class="flex items-center max-w-3xl min-w-40">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pt-0.5 text-gray-600 relative left-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input class="ml-2 rounded-full text-center  outline-none bg-transparent font-" style="width: 600px;" type="text" name="search" id="search" placeholder="Buscar elementos..." />
-            </div>
-            <div class="flex items-center justify-between ">
-                <ul class="flex items-center space-x-6">
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                    </li>
-                    <img src="" alt="Img perfil" class="bg-blanco relative inline-block h-[30px] w-[30px] !rounded-full object-cover object-center" />
-                </ul>
-            </div>
-        </nav>
+    @include('layouts.navigation')
 
 
         <!-- Fin barra de navegacion-->
@@ -70,13 +45,14 @@
             <nav class="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
                 @foreach($objetos as $objeto)
                 <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start text-blanco leading-tight transition-all hover:bg-rojoactivo hover:bg-opacity-80 focus:bg-rojoactivo focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+                
                     <div class="flex place-items-center mr-4">
                         <svg class="mr-1 h-3 w-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10" />
                             <line x1="12" y1="8" x2="12" y2="16" />
                             <line x1="8" y1="12" x2="16" y2="12" />
                         </svg>
-                        @if(($objeto?->type == App\Enums\ObjetoType::Folder->value))
+                        @if(($objeto?->type == App\Enums\ObjetoType::Folder))
                         <svg class="h-6 w-6 text-amarillocs" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" />
@@ -199,14 +175,14 @@
                     @foreach($objetos as $objeto)
                     <tr class="bg-white border-b hover:bg-gray-100">
                         <td class="pl-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            @if($objeto->type == App\Enums\ObjetoType::Folder->value)
+                            @if($objeto->type == App\Enums\ObjetoType::Folder)
                             <i class="fa-solid fa-folder-open fa-2xl" style="color: #000000;"></i>
                             @else
                             <i class="fa-solid fa-chart-column fa-2xl" style="color: #000000;"></i>
                             @endif
                         </td>
                         <td class="pr-2 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {{$objeto->name}}
+                        <a href="{{ route('objects.show', ['objeto' => $objeto->id]) }}">{{ $objeto->name }}</a>
                         </td>
                         <td class="pr-2 py-4 whitespace-nowrap text-sm text-gray-900">
                             {{$objeto->type}}
