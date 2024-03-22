@@ -3,17 +3,18 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlobController;
+use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\ObjetosController;
 
 
 
-Route::get('/welcome', function(){
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
 Route::get('/objects/main', [ObjetosController::class, 'index'])->name('objects.main');
 
-Route::get('/display',function(){
+Route::get('/display', function () {
     return view('display');
 });
 
@@ -48,6 +49,10 @@ Route::delete('objects/{id}', [ObjetosController::class, 'destroy']);
 // Ruta para recibir los datos a actualizar objeto
 
 Route::put('objects/{id}', [ObjetosController::class, 'update']);
+
+//Route::get('/auth/microsoft', 'Auth\LoginController@redirectToMicrosoft');
+//Route::get('/auth/microsoft/callback', 'Auth\LoginController@handleMicrosoftCallback');
+//Route::post('/pbi/access-token', [OAuthController::class, 'getAccessToken']);
 
 
 Route::controller(ObjetosController::class)->prefix('objetos')->name('objetos.')->group(function () {
