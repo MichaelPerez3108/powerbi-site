@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/c580716ab2.js" crossorigin="anonymous" defer></script>
     @vite(['resources/css/app.css','resources/js/app.js'])
+    @stack('scripts')
     <style>
         /* Agregar estilo para ajustar el contenido principal cuando el menú está desplegado */
         .main-content {
@@ -23,7 +24,7 @@
     </style>
 </head>
 
-<body class="bg-grisfondo"  x-data="{ open: false, openComents : false }" @click.away="open = false; openDoc = false; openComents = false">
+<body class="bg-grisfondo" x-data="{ open: false, openComents : false }" @click.away="open = false; openDoc = false; openComents = false">
 
     @include('layouts.navigation')
 

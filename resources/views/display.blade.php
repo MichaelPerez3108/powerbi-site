@@ -1,13 +1,20 @@
-<div x-data="{openDoc: false}">
-    @props([
-    'objetos'=> [],
-    'objeto' => null,
-    ])
-    <x-app-layout>
-        <x-slot name='title'>
-            {{$objeto->name}}
-        </x-slot>
-
+@props([
+'objetos'=> [],
+'objeto' => null,
+])
+<x-app-layout>
+    @pushIf($objeto->type == App\Enums\ObjetoType::Report, 'scripts')
+        @vite('resources/js/report.js')
+    {{--
+    <script>
+        {!! Illuminate\Support\Facades\Vite::content('resources/js/report.js') !!}
+    </script>
+    --}}
+    @endPushIf
+    <x-slot name='title'>
+        {{$objeto->name}}
+    </x-slot>
+    <div x-data="{openDoc: false}">
         <div x-show="open" id="estado" style="position: absolute;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class="relative flex flex-col bg-clip-border  bg-redcs text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
             <img src="{{asset('/storage/assets/cusezar.png')}}" height="100" width="150" style="margin: 0 auto;">
             <hr class="bg-amarillocs mt-3" style="color: #fff69b; border:solid 1px;">
@@ -35,7 +42,7 @@
             </nav>
         </div>
 
-       
+
 
         @if($objeto->type == App\Enums\ObjetoType::Folder)
         <!--Tabla de estructura de carpetas-->
@@ -122,9 +129,8 @@
         <div class="flex justify-center align-center">
             <div class="container absolute mx-auto bg-blanco overflow-hidden h-[800px] w-3/5 flex flex-col mt-10 p-2 z-0">
 
-                <iframe src="{{ $objeto->blob->content}}" frameborder="" id="frame" class="h-4/5 w-full bg-grisfondo static z-0 static">
-
-                </iframe>
+                <section id="report-container" x-data-report-id="{{ $objeto->blob->content }}" class="h-4/5 w-full bg-grisfondo z-0 static">
+                </section>
 
                 <div class="z-50 h-16 justify-between py-1 absolute top-0 right-0 mt-4 mr-4">
 
@@ -212,8 +218,6 @@
             </div>
         </div>
         @endif
-    </x-app-layout>
 
-
-
-</div>
+    </div>
+</x-app-layout>
