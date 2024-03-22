@@ -9,18 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blob extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
+
+    public $timestamps = false;
+
     protected $fillable = [
-        'id',
         'content',
     ];
-
-    protected $hidden = [
-
-    ];
-
-    protected $cast = [
-
-    ];
-
 }

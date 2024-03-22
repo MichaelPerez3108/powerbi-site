@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('objetos', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->integer('parent_id')->nullable($valor = true);
-            $table->string('name', 50);
-            $table->string('type', 50);
-            $table->integer('blob_id')->nullable($valor = true);
-
+            $table->uuid('id')->primary();
+            $table->integer('parent_id')->nullable();
+            $table->string('name', 50)->nullable();
+            $table->string('type', 10);
+            $table->uuid('blob_id')->nullable();
             $table->timestamps();
         });
     }

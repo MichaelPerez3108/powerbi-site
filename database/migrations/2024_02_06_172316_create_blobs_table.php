@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('blobs', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->binary('content');
-            $table->timestamps();
+            $table->uuid('id')->primary();
+            $table->binary('content')->nullable();
         });
     }
 

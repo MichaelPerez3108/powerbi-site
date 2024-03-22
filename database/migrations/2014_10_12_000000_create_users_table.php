@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->string('microsoft_user_id', 50);
+            $table->uuid('id')->primary();
+            $table->string('microsoft_user_id', 50)->index()->nullable();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password',100)->nullable();
-            $table->string('access_token',150);
-            $table->string('refresh_token',150);
-            $table->string('scopes',150);
+            $table->string('password', 100)->nullable();
+            $table->string('access_token', 150);
+            $table->string('refresh_token', 150);
+            $table->string('scopes', 150);
             $table->timestamps();
         });
     }
