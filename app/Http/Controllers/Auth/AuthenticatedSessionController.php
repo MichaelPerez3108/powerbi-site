@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Socialite;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -30,6 +31,29 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * Redirect the user to the Microsoft authentication page.
+     */
+    public function redirectToMicrosoft()
+    {
+        return Socialite::driver('microsoft')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Microsoft.
+     */
+    public function handleMicrosoftCallback()
+    {
+        $user = Socialite::driver('microsoft')->user();
+
+        // $user->token;
+        // Add your logic to authenticate the user in your system here.
+        // For example, find or create a user in your database.
+
+        // Redirect the user to the desired page after successful authentication.
+        return redirect()->to('/home');
     }
 
     /**
