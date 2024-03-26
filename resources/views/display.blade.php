@@ -166,18 +166,21 @@
                 <!-- despliegue de algunas metricas-->
                 <hr class="my-1 border-y-2">
                 <div class="h-1/5 w-full  flex flex-col p-5">
-                    <div class="my-1">
-                        <h3 class="inline">Nombre del reporte: </h3>
-                        <p class="inline font-bold">{{ $objeto?->name }}</p>
+                    <div>
+                        <div class="my-1">
+                            <h3 class="inline">Nombre del reporte: </h3>
+                            <p class="inline font-bold">{{ $objeto?->name }}</p>
+                        </div>
+                        <div class="my-1">
+                            <h3 class="inline ">Promedio de calificacion: </h3>
+                            <p class="inline font-bold">3.5</p>
+                        </div>
+                        <div class="my-1">
+                            <h3 class="inline">Vistas totales: </h3>
+                            <p class="inline font-bold">1250</p>
+                        </div>
                     </div>
-                    <div class="my-1">
-                        <h3 class="inline ">Promedio de calificacion: </h3>
-                        <p class="inline font-bold">3.5</p>
-                    </div>
-                    <div class="my-1">
-                        <h3 class="inline">Vistas totales: </h3>
-                        <p class="inline font-bold">1250</p>
-                    </div>
+
                 </div>
             </div>
 
