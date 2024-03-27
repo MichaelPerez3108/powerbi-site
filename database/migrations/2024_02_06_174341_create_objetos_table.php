@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('objetos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('parent_id')->nullable();
+            $table->uuid('parent_id')->nullable();
             $table->string('name', 50)->nullable();
             $table->string('type', 10);
             $table->uuid('blob_id')->nullable();

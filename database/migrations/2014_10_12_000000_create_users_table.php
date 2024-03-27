@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password', 100)->nullable();
-            $table->string('access_token', 150);
-            $table->string('refresh_token', 150);
-            $table->string('scopes', 150);
+            $table->string('access_token', 150)->nullable();
+            $table->string('refresh_token', 150)->nullable();
+            $table->string('scopes', 150)->nullable();
             $table->timestamps();
         });
     }
