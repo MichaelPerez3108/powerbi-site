@@ -35,6 +35,7 @@ export default {
             'negroclarito':'#4D4D4D',
             'negro':'#000000',
             'azulLink':'#0038FF',
+            'red': '#DA1212',
         },
     },
 

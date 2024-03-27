@@ -40,7 +40,8 @@
                 </label>
                 <input type="text" name="content" x-show="type === 'report'" class="mt-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring focus:border-blue-500" placeholder="URL de Power-BI" x-model="url">
 
-                <button type="submit" class="bg-success text-white rounded-md py-2 px-3 m-4">Submit</button>
+                <button type="submit" class="bg-success text-blanco font-bold rounded-md py-2 px-3 m-4">Guardar</button>
+                <a href="{{route('objects.index')}}"><button type="button" class="bg-red text-blanco font-bold rounded-md py-2 px-3 m-4">Cancelar</button></a>
             </form>
         </div>
     </div>

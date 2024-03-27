@@ -66,7 +66,7 @@ class ObjetosController extends Controller
             $objeto->save();
         }
 
-        return redirect()->route('objects.main');
+        return redirect()->route('objects.index');
     }
 
 
@@ -81,8 +81,7 @@ class ObjetosController extends Controller
         }
 
         return view('display', [
-            'objetos' => [],
-            'objeto' => $objeto
+            'objetoLista' => $objeto
         ]);
     }
 

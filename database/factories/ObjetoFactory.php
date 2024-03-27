@@ -21,7 +21,7 @@ class ObjetoFactory extends Factory
     {
         $type = fake()->randomElement(ObjetoType::cases());
         return [
-            'parent_id' => fake()->randomElement([null, null, Objeto::inRandomOrder()->first()?->id]),
+            'parent_id' => fake()->randomElement([null, Objeto::inRandomOrder()->where('type', ObjetoType::Folder->value)->first()?->id]),
             'name' =>  $type == ObjetoType::Report ? ('Reporte ' . fake()->firstName()) : ('Carpeta ' . fake()->domainName()),
             'type' => $type,
         ];

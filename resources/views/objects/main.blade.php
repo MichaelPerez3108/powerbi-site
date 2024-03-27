@@ -1,5 +1,5 @@
 @props([
-'objeto' => null,
+'objeto' => ''
 ])
 
 <!DOCTYPE html>
@@ -31,19 +31,19 @@
 <body class="bg-grisfondo" x-data="{ open: false, openDoc: false }" @click.away="open = false; openDoc = false">
     <!-- BARRA DE NAVEGACION-->
     <div x-data="{openComents:false}" @click.away="openComents = false" class="">
-    @include('layouts.navigation')
+        @include('layouts.navigation')
 
 
         <!-- Fin barra de navegacion-->
 
         <!-- Menu lateral de carpetas desplegable-->
         <div x-show="open" id="estado" style="position: absolute;" x-transition.origin.left:enter="transition ease-out duration-200" x-transition.origin.left:enter-start="opacity-0 scale-100" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-100" class="relative flex flex-col bg-clip-border  bg-redcs text-gray-700 h-[calc(100vh-4.1rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-        <img src="{{asset('/storage/assets/cusezar.png')}}" height="100" width="150" style="margin: 0 auto;">
+            <img src="{{asset('/storage/assets/cusezar.png')}}" height="100" width="150" style="margin: 0 auto;">
             <hr class="bg-amarillocs mt-3" style="color: #fff69b; border:solid 1px;">
             <nav class="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
                 @foreach($objetos as $objeto)
                 <div role="button" tabindex="0" class="flex items-center w-full p-3 rounded-lg text-start text-blanco leading-tight transition-all hover:bg-rojoactivo hover:bg-opacity-80 focus:bg-rojoactivo focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
-                
+
                     <div class="flex place-items-center mr-4">
                         <svg class="mr-1 h-3 w-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10" />
@@ -126,7 +126,7 @@
             </nav>
 
 
-<!--
+            <!--
             <button x-on:click="openComents = ! openComents">Comentarios</button>
             <button x-on:click="openDoc = ! openDoc">Documentacion</button>
     -->
@@ -180,7 +180,8 @@
                             @endif
                         </td>
                         <td class="pr-2 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <a href="{{ route('objects.show', ['objeto' => $objeto->id]) }}">{{ $objeto->name }}</a>
+                            <a href="{{ route('objects.show', ['id' => $objeto->id]) }}">{{ $objeto->name }}</a>
+
                         </td>
                         <td class="pr-2 py-4 whitespace-nowrap text-sm text-gray-900">
                             {{$objeto->type}}

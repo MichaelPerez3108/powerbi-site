@@ -25,16 +25,22 @@
                 </li>
                 <x-dropdown class="text-gray-500 bg-blanco">
                     <x-slot name="trigger">
-                        <img src="" alt="Img perfil" class="bg-blanco relative inline-block h-[30px] w-[30px] !rounded-full object-cover object-center" />
+                        <img src="#" alt="Img perfil" class="bg-blanco relative inline-block h-[30px] w-[30px] !rounded-full object-cover object-center" />
                     </x-slot>
 
                     <x-slot name="content" class="bg-blanco">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <h6 class="text-center mb-2 ">Bienvenido</h6>
+                            <p class="font-bold text-center mb-2">{{Auth()->user()->name}}</p>
+                            <hr>
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-grisfondo dark:hover:bg-gray-600 dark:hover:text-white">Perfil</a>
+                                <a href="{{route('profile.edit')}}" class="block px-4 py-2 hover:bg-grisfondo dark:hover:bg-gray-600 dark:hover:text-white">Perfil</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-grisfondo dark:hover:bg-gray-600 dark:hover:text-white">Cerrar Sesion</a>
+                                <form action="/logout" method="POST">
+                                    @csrf
+                                    <a href="#" class="block px-4 py-2 hover:bg-grisfondo" onclick="this.closest('form').submit()">Cerrar Sesion</a>
+                                </form>
                             </li>
                         </ul>
                     </x-slot>

@@ -21,6 +21,13 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return Redirect::route('/')->with('status','Has finalizado tu sesion');
+    }
+
     /**
      * Update the user's profile information.
      */
