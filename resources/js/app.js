@@ -12,7 +12,7 @@ const obtenerObjetos = async () => {
     const carpetasDesplegadas = new Map(); // Mapa para almacenar las carpetas desplegadas y sus contenedores
 
     try {
-        const url = "/objects/main";
+        const url = "/objects";
         const response = await axios.get(url, {
             headers: { Accept: "application/json" },
         });

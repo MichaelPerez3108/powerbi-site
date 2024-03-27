@@ -8,26 +8,25 @@ use App\Http\Controllers\ObjetosController;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 
-
-
-
 Route::middleware('auth')->group(function () {
-    Route::get('/',function(){
-        return view('welcome');
+
+    Route::get('/', function () {
+        //    return view('welcome');
+        return redirect('objects.index');
     });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/logout',[Profile::class, 'logout']);
 
     Route::controller(ObjetosController::class)->prefix('objects')->name('objects.')->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::get('/{id}','show')->name('show');
+        //Route::get('/create', 'create')->name('create');
         Route::post('/create', 'store')->name('store');
+        Route::get('/{objeto}/{type?}', 'show')->name('show');
         //Route::get('/{objeto}/edit', 'edit')->name('edit');
-        Route::post('/{objects}/edit', 'update')->name('update');
-        Route::post('/{objects}/delete', 'delete')->name('delete');
+        Route::post('/{objeto}/edit', 'update')->name('update');
+        Route::post('/{objeto}/delete', 'delete')->name('delete');
         /*
         // rest
         Route::get('/', 'index')->name('index');
@@ -40,7 +39,6 @@ Route::middleware('auth')->group(function () {
         */
     });
 });
-
 
 
 //Route::get('/auth/microsoft', 'Auth\LoginController@redirectToMicrosoft');

@@ -37,9 +37,9 @@
                                 <a href="{{route('profile.edit')}}" class="block px-4 py-2 hover:bg-grisfondo dark:hover:bg-gray-600 dark:hover:text-white">Perfil</a>
                             </li>
                             <li>
-                                <form action="/logout" method="POST">
-                                    @csrf
-                                    <a href="#" class="block px-4 py-2 hover:bg-grisfondo" onclick="this.closest('form').submit()">Cerrar Sesion</a>
+                                <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                    <button type="submit">Cerrar sesion</button>
                                 </form>
                             </li>
                         </ul>

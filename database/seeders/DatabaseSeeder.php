@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        Objeto::factory(50)->create();
         Objeto::factory(100)->create();
-        Objeto::factory(200)->create();
+        Objeto::factory(100)->create();
+        Objeto::factory(100)->create();
     }
 }
