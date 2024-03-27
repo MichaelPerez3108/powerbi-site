@@ -24,7 +24,7 @@ class ObjetosController extends Controller
         if ($request->expectsJson()) {
             return response()->json($objetos);
         }
-        return view('objects.main',)->with('objetos', $objetos);
+        return view('objects.index',)->with('objetos', $objetos);
     }
 
     /**

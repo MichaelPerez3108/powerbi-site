@@ -34,7 +34,10 @@
                                 <a href="#" class="block px-4 py-2 hover:bg-grisfondo dark:hover:bg-gray-600 dark:hover:text-white">Perfil</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-grisfondo dark:hover:bg-gray-600 dark:hover:text-white">Cerrar Sesion</a>
+                                <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                    <button type="submit">Cerrar sesion</button>
+                                </form>
                             </li>
                         </ul>
                     </x-slot>
